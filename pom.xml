@@ -15,15 +15,27 @@
         <module>gulimall-member</module>
         <module>gulimall-ware</module>
         <module>gulimall-product</module>
+        <module>renren-fast</module>
     </modules>
 
 
     <!--  这里的属性会被子模块继承  -->
+    <!--  这里的属性会被子模块继承  -->
     <properties>
         <java.version>1.8</java.version>
+        <mall.version>0.0.1-SNAPSHOT</mall.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <lombok.version>1.18.18</lombok.version>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <mysql.version>8.0.23</mysql.version>
+        <http.components.version>4.4.13</http.components.version>
+        <commons.lang.version>2.6</commons.lang.version>
         <spring.boot.version>2.4.3</spring.boot.version>
         <spring-cloud.version>2020.0.1</spring-cloud.version>
     </properties>
+    <!--  子模块继承父模块之后，提供作用：锁定版本 + 子模块不用再写 version  -->
+
     <dependencyManagement>
         <dependencies>
             <dependency>
