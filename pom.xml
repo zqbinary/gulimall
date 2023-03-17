@@ -31,6 +31,7 @@
         <lombok.version>1.18.18</lombok.version>
         <!--        原是3.2 -->
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
+
         <mysql.version>8.0.23</mysql.version>
         <http.components.version>4.4.13</http.components.version>
         <commons.lang.version>2.6</commons.lang.version>
