@@ -7,7 +7,6 @@
         <groupId>com.atguigu.gulimall</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.atguigu.gulimall</groupId>
     <artifactId>gulimall-coupon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>gulimall-coupon</name>
