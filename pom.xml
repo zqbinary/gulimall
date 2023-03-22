@@ -18,6 +18,7 @@
         <module>renren-fast</module>
         <module>renren-generator</module>
         <module>gulimall-common</module>
+        <module>gulimall-gateway</module>
     </modules>
 
 
@@ -34,9 +35,9 @@
         <mysql.version>8.0.23</mysql.version>
         <http.components.version>4.4.13</http.components.version>
         <commons.lang.version>2.6</commons.lang.version>
-        <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
-        <spring.cloud.version>Greenwich.SR2</spring.cloud.version>
-        <cloud.alibaba.version>2.1.0.RELEASE</cloud.alibaba.version>
+        <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
+        <spring.cloud.version>HOXTON.SR10</spring.cloud.version>
+        <com.alibaba.cloud>2.2.6.RELEASE</com.alibaba.cloud>
         <fastjson.version>1.2.79</fastjson.version>
     </properties>
     <!--  为本模块，已经子模块提供默认版本  -->
@@ -56,23 +57,23 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${com.alibaba.cloud}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-    <!--  这里的依赖会被子模块继承  -->
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
 
+    <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
