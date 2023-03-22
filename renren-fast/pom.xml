@@ -8,13 +8,15 @@
     <packaging>jar</packaging>
     <description>renren-fast</description>
 
-    <parent>
-        <artifactId>gulimall</artifactId>
-        <groupId>com.atguigu.gulimall</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
-
     <properties>
+
+        <!--        renren降级-->
+        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR3</spring.cloud.version>
+        <cloud.alibaba.version>2.2.1.RELEASE</cloud.alibaba.version>
+        <com.alibaba.cloud>2.2.1.RELEASE</com.alibaba.cloud>
+
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -40,7 +42,7 @@
         <gson.version>2.8.5</gson.version>
         <fastjson.version>1.2.79</fastjson.version>
         <hutool.version>4.1.1</hutool.version>
-        <lombok.version>1.18.4</lombok.version>
+        <lombok.version>1.18.20</lombok.version>
 
         <!--wagon plugin 配置-->
         <service-path>/work/renren</service-path>
@@ -49,8 +51,39 @@
         <remote-username>root</remote-username>
         <remote-passwd>123456</remote-passwd>
     </properties>
+    <dependencyManagement>
+        <dependencies>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${com.alibaba.cloud}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>com.atguigu.gulimall</groupId>
+            <artifactId>gulimall-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
