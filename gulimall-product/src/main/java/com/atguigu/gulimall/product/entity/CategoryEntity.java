@@ -2,6 +2,7 @@ package com.atguigu.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -63,4 +64,8 @@ public class CategoryEntity implements Serializable {
 
     @TableField(exist = false)
     private List<CategoryEntity> children;
+
+
+    @TableLogic(value = "null", delval = "now()")
+    private Date deletedAt;
 }
