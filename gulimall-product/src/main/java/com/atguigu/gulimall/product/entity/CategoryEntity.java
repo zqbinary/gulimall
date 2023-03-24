@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import lombok.Data;
 
 /**
  * 商品三级分类
@@ -66,6 +65,8 @@ public class CategoryEntity implements Serializable {
     private List<CategoryEntity> children;
 
 
+    //todo 测试 删除
     @TableLogic(value = "null", delval = "now()")
+    @TableField(exist = false)
     private Date deletedAt;
 }
