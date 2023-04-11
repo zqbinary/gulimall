@@ -20,7 +20,10 @@ spring:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
-        # nginx 来的 默认去 product
+        - id: gulimall_search
+          uri: lb://gulimall-search
+          predicates:
+            - Host=search.gulimall.com
         - id: gulimall_host_route
           uri: lb://gulimall-product
           predicates:

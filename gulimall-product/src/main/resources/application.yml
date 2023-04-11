@@ -21,6 +21,8 @@ spring:
     password: root
   cache:
     type: redis
+  thymeleaf:
+    cache: false
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:

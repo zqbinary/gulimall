@@ -1,4 +1,4 @@
-package com.atguigu.guilimall.search;
+package com.atguigu.gulimall.search;
 
 import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.jupiter.api.Test;

@@ -94,6 +94,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //    }
 
 
+    @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
+    @Override
+    public List<CategoryEntity> getLevel1Categorys() {
+        System.out.println("getLevel1Categorys........");
+        long l = System.currentTimeMillis();
+        List<CategoryEntity> categoryEntities = this.baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
+        System.out.println("消耗时间：" + (System.currentTimeMillis() - l));
+        return categoryEntities;
+    }
+
     @Override
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();

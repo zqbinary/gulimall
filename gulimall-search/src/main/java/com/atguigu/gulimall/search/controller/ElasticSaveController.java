@@ -1,9 +1,9 @@
-package com.atguigu.guilimall.search.controller;
+package com.atguigu.gulimall.search.controller;
 
 import com.atguigu.common.exception.BizCodeEnum;
 import com.atguigu.common.to.es.SkuEsModel;
 import com.atguigu.common.utils.R;
-import com.atguigu.guilimall.search.service.ProductSaveService;
+import com.atguigu.gulimall.search.service.ProductSaveService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

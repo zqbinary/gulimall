@@ -1,5 +1,4 @@
-package com.atguigu.guilimall.search.config;
-
+package com.atguigu.gulimall.search.config;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
@@ -9,9 +8,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @Description:
+ * @Created: with IntelliJ IDEA.
+ * @author: 夏沫止水
+ * @createTime: 2020-06-04 16:46
+ **/
 
 @Configuration
-public class MallEsConfig {
+public class GulimallElasticSearchConfig {
+
     public static final RequestOptions COMMON_OPTIONS;
 
     //官方建议这个 单例
@@ -34,4 +40,5 @@ public class MallEsConfig {
                         new HttpHost(host, 9200, "http")));
 
     }
+
 }

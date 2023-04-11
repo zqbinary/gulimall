@@ -1,7 +1,6 @@
 package com.atguigu.gulimall.product.web;
 
 
-import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.product.entity.CategoryEntity;
 import com.atguigu.gulimall.product.service.CategoryService;
 import com.atguigu.gulimall.product.vo.Catelog2Vo;
@@ -9,45 +8,51 @@ import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/")
+@Controller
 public class IndexController {
     @Resource
     private CategoryService categoryService;
+    @Autowired
+    RedissonClient redissonClient;
+    String uuid = "init";
 
     @GetMapping("/")
-    public R indexPage() {
+    private String indexPage(Model model) {
+
         //1、查出所有的一级分类
-        List<CategoryEntity> categoryEntities = categoryService.getLevel1Categories();
-        return R.ok().setData(categoryEntities);
+        List<CategoryEntity> categoryEntities = categoryService.getLevel1Categorys();
+        model.addAttribute("categories", categoryEntities);
+
+        return "index";
     }
 
+
     @GetMapping("ping")
+    @ResponseBody
     public String ping() {
         return "pong";
     }
 
 
     @GetMapping(value = "/index/catalog.json")
+    @ResponseBody
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
         return categoryService.getCatalogJson();
     }
 
-    @Autowired
-    RedissonClient redissonClient;
-    String uuid = "init";
-
 
     @GetMapping("/write")
+    @ResponseBody
     public String write() {
         RReadWriteLock rw = redissonClient.getReadWriteLock("rw");
         RLock rLock = rw.writeLock();
