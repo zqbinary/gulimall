@@ -1,5 +1,5 @@
 server:
-  port: 10000
+  port: 10001
 # mysql
 spring:
   datasource:
@@ -16,8 +16,11 @@ spring:
   messages:
     encoding: UTF-8
   redis:
-    host: 192.168.3.13
+    host: localhost
     port: 6379
+    password: root
+  cache:
+    type: redis
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
