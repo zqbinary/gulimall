@@ -21,6 +21,7 @@ public class SearchParam {
 
     /**
      * 品牌id,可以多选
+     * 前端是 brandId=x1&brandId=x2
      */
     private List<Long> brandId;
 
@@ -41,11 +42,14 @@ public class SearchParam {
 
     /**
      * 价格区间查询
+     * 约定 100_500,_500,100_
      */
     private String skuPrice;
 
     /**
      * 按照属性进行筛选
+     * attrs=1_其他:安卓：鸿蒙&attrs=2_屏幕:6寸
+     * 属性id_属性名：属性值1：属性值2
      */
     private List<String> attrs;
 

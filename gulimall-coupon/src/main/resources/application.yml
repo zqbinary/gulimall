@@ -10,7 +10,7 @@ spring:
     password: root
   cloud:
     nacos:
-      server-addr: localhost:8848
+      server-addr: ss:8848
   application:
     name: gulimall-coupon
 mybatis-plus:

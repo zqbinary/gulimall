@@ -16,7 +16,7 @@ import java.util.List;
 public class SearchResult {
 
     /**
-     * 查询到的所有商品信息
+     * es:查询到的所有商品信息
      */
     private List<SkuEsModel> product;
 
@@ -39,7 +39,7 @@ public class SearchResult {
     private List<Integer> pageNavs;
 
     /**
-     * 当前查询到的结果，所有涉及到的品牌
+     * 涉及到的品牌
      */
     private List<BrandVo> brands;
 

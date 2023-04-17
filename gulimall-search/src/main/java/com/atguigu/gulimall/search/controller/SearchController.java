@@ -1,9 +1,13 @@
 package com.atguigu.gulimall.search.controller;
 
+import com.atguigu.gulimall.search.service.MallSearchService;
 import com.atguigu.gulimall.search.vo.SearchParam;
+import com.atguigu.gulimall.search.vo.SearchResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class SearchController {
 
-//    @Autowired
-//    private MallSearchService mallSearchService;
+    @Autowired
+    private MallSearchService mallSearchService;
 
     @GetMapping("/")
     public String t1() {
@@ -20,8 +24,12 @@ public class SearchController {
     }
 
     @GetMapping("/list")
-    public String t2() {
-        return "list";
+    @ResponseBody
+    public SearchResult t2(SearchParam param, HttpServletRequest request) {
+        param.set_queryString(request.getQueryString());
+        //1、根据传递来的页面的查询参数，去es中检索商品
+        return mallSearchService.search(param);
+
     }
 
     /**
@@ -36,9 +44,9 @@ public class SearchController {
         param.set_queryString(request.getQueryString());
 
         //1、根据传递来的页面的查询参数，去es中检索商品
-//        SearchResult result = mallSearchService.search(param);
+        SearchResult result = mallSearchService.search(param);
 
-//        model.addAttribute("result", result);
+        model.addAttribute("result", result);
 
         return "list";
     }
