@@ -7,7 +7,7 @@ import lombok.Data;
  * @createTime: 2020-06-19 11:21
  **/
 @Data
-public class AttrValueWithSkuIdVO {
+public class AttrValueWithSkuIdVo {
 
     private String attrValue;
 
