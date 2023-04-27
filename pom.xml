@@ -21,6 +21,7 @@
         <module>gulimall-gateway</module>
         <module>gulimall-search</module>
         <module>gulimall-auth-sever</module>
+        <module>third-part-sever</module>
     </modules>
 
 
