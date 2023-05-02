@@ -2,6 +2,7 @@ package com.atguigu.gulimall.member.service;
 
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.member.entity.MemberEntity;
+import com.atguigu.gulimall.member.vo.MemberUserLoginVo;
 import com.atguigu.gulimall.member.vo.MemberUserRegisterVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -19,5 +20,7 @@ public interface MemberService extends IService<MemberEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     void register(MemberUserRegisterVo vo);
+
+    MemberEntity login(MemberUserLoginVo vo);
 }
 

@@ -9,5 +9,7 @@ spring:
     cache: false
   redis:
     password: root
+  session:
+    store-type: redis
 server:
   port: 20000

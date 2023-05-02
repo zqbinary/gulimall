@@ -9,6 +9,7 @@ import com.atguigu.gulimall.member.entity.MemberLevelEntity;
 import com.atguigu.gulimall.member.exception.PhoneException;
 import com.atguigu.gulimall.member.exception.UsernameException;
 import com.atguigu.gulimall.member.service.MemberService;
+import com.atguigu.gulimall.member.vo.MemberUserLoginVo;
 import com.atguigu.gulimall.member.vo.MemberUserRegisterVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -58,7 +59,22 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         memberEntity.setGender(0);
         //todo @Created?
         memberEntity.setCreateTime(new Date());
+        memberEntity.setUsername(vo.getUserName());
         this.baseMapper.insert(memberEntity);
+    }
+
+    @Override
+    public MemberEntity login(MemberUserLoginVo vo) {
+        MemberEntity memberEntity = this.baseMapper.selectOne(new QueryWrapper<MemberEntity>().eq("username", vo.getLoginacct()).or().eq("mobile", vo.getLoginacct()));
+        if (memberEntity == null) {
+            return null;
+        }
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        boolean matches = bCryptPasswordEncoder.matches(vo.getPassword(), memberEntity.getPassword());
+        if (!matches) {
+            return null;
+        }
+        return memberEntity;
     }
 
     private void checkUserNameUnique(String userName) {

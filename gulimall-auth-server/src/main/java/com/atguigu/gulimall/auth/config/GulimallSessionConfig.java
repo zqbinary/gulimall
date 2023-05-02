@@ -1,4 +1,4 @@
-package com.atguigu.gulimall.search.config;
+package com.atguigu.gulimall.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

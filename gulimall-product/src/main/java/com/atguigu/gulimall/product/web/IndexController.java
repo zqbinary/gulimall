@@ -1,9 +1,11 @@
 package com.atguigu.gulimall.product.web;
 
 
+import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.gulimall.product.entity.CategoryEntity;
 import com.atguigu.gulimall.product.service.CategoryService;
 import com.atguigu.gulimall.product.vo.Catelog2Vo;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
@@ -14,11 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 public class IndexController {
     @Resource
     private CategoryService categoryService;
@@ -27,7 +31,10 @@ public class IndexController {
     String uuid = "init";
 
     @GetMapping("/")
-    private String indexPage(Model model) {
+    private String indexPage(Model model, HttpSession session) {
+
+        Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
+        log.info("seesion:{}", attribute);
 
         //1、查出所有的一级分类
         List<CategoryEntity> categoryEntities = categoryService.getLevel1Categorys();

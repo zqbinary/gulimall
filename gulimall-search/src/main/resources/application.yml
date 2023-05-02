@@ -8,6 +8,10 @@ spring:
         server-addr: ss:8848
   thymeleaf:
     cache: false
+  redis:
+    password: root
+  session:
+    store-type: redis
 es:
   host: 192.168.3.212
 server:

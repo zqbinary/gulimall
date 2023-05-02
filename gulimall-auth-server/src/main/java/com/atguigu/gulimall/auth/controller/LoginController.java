@@ -4,8 +4,10 @@ import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.common.exception.BizCodeEnum;
 import com.atguigu.common.utils.R;
+import com.atguigu.common.vo.MemberResponseVo;
 import com.atguigu.gulimall.auth.feign.MemberFeignService;
 import com.atguigu.gulimall.auth.feign.ThirdPartyFeignService;
+import com.atguigu.gulimall.auth.vo.UserLoginVo;
 import com.atguigu.gulimall.auth.vo.UserRegisterVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,10 +90,7 @@ public class LoginController {
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (v1, v2) -> v1));
             return errPage(attributes, errors);
         }
-        //1、效验验证码
-        String code = vos.getCode();
         //获取存入Redis里的验证码
-
         String redisCode = stringRedisTemplate.opsForValue().get(AuthServerConstant.SMS_CODE_CACHE_PREFIX + vos.getPhone());
         //截取字符串
         if (StringUtils.isEmpty(redisCode)) {
@@ -99,6 +99,7 @@ public class LoginController {
             return errPage(attributes, errors);
         }
         String codeStore = redisCode.split("_")[0];
+        //1、效验验证码
         if (!StringUtils.equals(vos.getCode(), codeStore)) {
             errors.put("code", "验证码错误");
             return errPage(attributes, errors);
@@ -123,8 +124,39 @@ public class LoginController {
         return "redirect:http://auth.gulimall.com/reg.html";
 
     }
-    //从session先取出来用户的信息，判断用户是否已经登录过了
-    //如果用户没登录那就跳转到登录页面
+
+    @GetMapping("/login.html")
+    public String loginPage(HttpSession session) {
+        //从session先取出来用户的信息，判断用户是否已经登录过了
+        Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
+        log.info("seesion:{}", attribute);
+        if (attribute == null) {
+            //如果用户没登录那就跳转到登录页面
+            return "login";
+        } else {
+            return "redirect:http://gulimall.com";
+        }
+    }
+
+    @PostMapping("/login")
+    public String login(UserLoginVo vo, RedirectAttributes attributes, HttpSession session) {
+        R login = memberFeignService.login(vo);
+
+        if (login.getCode() == 0) {
+            MemberResponseVo data = login.getData("data", new TypeReference<MemberResponseVo>() {
+            });
+            log.info("memberResponseVo data:{}", data);
+            session.setAttribute(AuthServerConstant.LOGIN_USER, data);
+            return "redirect:http://gulimall.com";
+        } else {
+            Map<String, String> errors = new HashMap<>();
+            errors.put("msg", login.getData("msg", new TypeReference<String>() {
+            }));
+            attributes.addFlashAttribute("errors", errors);
+            return "redirect:http://auth.gulimall.com/login.html";
+        }
+    }
+
 //gulimall.com";
     //远程登录
 //gulimall.com";
