@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class GulimallAuthSeverApplication {
+public class GulimallAuthServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GulimallAuthSeverApplication.class, args);
+        SpringApplication.run(GulimallAuthServerApplication.class, args);
     }
 
 }

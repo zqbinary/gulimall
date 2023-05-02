@@ -1,5 +1,7 @@
 server:
   port: 88
+ribbon:
+  ServerListRefreshInterval: 3000
 spring:
   application:
     name: gulimall-gateway

@@ -1,6 +1,10 @@
 package com.atguigu.common.exception;
 
+import lombok.Data;
+
 public enum BizCodeEnum {
+
+
     /**
      * 系统未知异常
      */
@@ -32,6 +36,9 @@ public enum BizCodeEnum {
     }
 
     public String getMsg() {
+        return msg;
+    }
+    public String getMessage() {
         return msg;
     }
 }

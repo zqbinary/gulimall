@@ -7,5 +7,7 @@ spring:
         server-addr: ss:8848
   thymeleaf:
     cache: false
+  redis:
+    password: root
 server:
   port: 20000

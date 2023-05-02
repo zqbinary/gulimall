@@ -2,6 +2,7 @@ package com.atguigu.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.atguigu.common.exception.BizCodeEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,10 @@ public class R extends HashMap<String, Object> {
 
     public static R error(String msg) {
         return error(500, msg);
+    }
+
+    public static R error(BizCodeEnum bizCodeEnum) {
+        return error(bizCodeEnum.getCode(), bizCodeEnum.getMsg());
     }
 
     public static R error(int code, String msg) {
