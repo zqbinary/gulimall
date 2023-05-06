@@ -6,3 +6,5 @@ spring:
   cloud:
     nacos:
       server-addr: ss:8848
+  redis:
+    password: root
