@@ -41,6 +41,31 @@
             <span>|</span>
             <h2 class="btn1">账户登录</h2>
         </div>
+        <div class="si_bom1 tab" style="display: none;">
+            <div class="error">
+                <div></div>
+                请输入账户名和密码
+            </div>
+            <form action="/login" method="post">
+                <div style="color: red" th:text="${errors != null ? (#maps.containsKey(errors, 'msg') ? errors.msg : '') : ''}"></div>
+                <ul>
+                    <li class="top_1">
+                        <img src="/static/login/JD_img/user_03.png" class="err_img1"/>
+                        <input type="text" name="loginacct" placeholder=" 邮箱/用户名/已验证手机" class="user" value="18888888888"/>
+                    </li>
+                    <li>
+                        <img src="/static/login/JD_img/user_06.png" class="err_img2"/>
+                        <input type="password" name="password" placeholder=" 密码" class="password" value="123456"/>
+                    </li>
+                    <li class="bri">
+                        <a href="/static/login/">忘记密码</a>
+                    </li>
+                    <li class="ent">
+                        <button class="btn2" type="submit">登 &nbsp; &nbsp;录</a></button>
+                    </li>
+                </ul>
+        </div>
+
         <div class="si_bom tab">
             <img src="/static/login/JD_img/show.png" class="bom_1"/>
             <a href="/static/login/#"><img src="/static/login/JD_img/phone-orange.png" class="bom_2"/></a>
@@ -53,30 +78,6 @@
                 <img src="/static/login/JD_img/4de5019d2404d347897dee637895d02b_19.png"/>
                 <span><a href="/static/login/#">更安全</a></span>
             </p>
-        </div>
-        <div class="si_bom1 tab" style="display: none;">
-            <div class="error">
-                <div></div>
-                请输入账户名和密码
-            </div>
-            <form action="/login" method="post">
-                <div style="color: red" th:text="${errors != null ? (#maps.containsKey(errors, 'msg') ? errors.msg : '') : ''}"></div>
-                <ul>
-                    <li class="top_1">
-                        <img src="/static/login/JD_img/user_03.png" class="err_img1"/>
-                        <input type="text" name="loginacct" placeholder=" 邮箱/用户名/已验证手机" class="user"/>
-                    </li>
-                    <li>
-                        <img src="/static/login/JD_img/user_06.png" class="err_img2"/>
-                        <input type="password" name="password" placeholder=" 密码" class="password"/>
-                    </li>
-                    <li class="bri">
-                        <a href="/static/login/">忘记密码</a>
-                    </li>
-                    <li class="ent">
-                        <button class="btn2" type="submit">登 &nbsp; &nbsp;录</a></button>
-                    </li>
-                </ul>
         </div>
         <div class="si_out">
             <ul>
