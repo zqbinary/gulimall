@@ -94,7 +94,8 @@
                     </div>
                     <div>
                         <ol>
-                            <li><input type="checkbox" th:attr="skuId=${item.skuId}" class="itemChecked" th:checked="${item.check}"></li>
+                            <li><input type="checkbox" th:attr="skuId=${item.skuId}" class="itemChecked"
+                                       th:checked="${item.check}"></li>
                             <li>
                                 <dt><img th:src="${item.image}" alt=""></dt>
                                 <dd style="width: 300px;">
@@ -117,7 +118,8 @@
                                 </p>
 
                             </li>
-                            <li style="font-weight:bold"><p class="zj">￥[[${#numbers.formatDecimal(item.totalPrice,3,2)}]]</p></li>
+                            <li style="font-weight:bold"><p class="zj">
+                                ￥[[${#numbers.formatDecimal(item.totalPrice,3,2)}]]</p></li>
                             <li>
                                 <p class="deleteItemBtn" th:attr="skuId=${item.skuId}">删除</p>
                             </li>
@@ -125,7 +127,7 @@
                     </div>
                 </li>
 
-            </ul >
+            </ul>
         </div>
         <div class="One_ShopFootBuy fix1">
             <div>
@@ -224,11 +226,11 @@
     }
 
     function toItem(skuId) {
-        window.location.href = "http://item.gmall.com:8084/" + skuId + ".html";
+        window.location.href = "http://item.gmall.com/" + skuId + ".html";
     }
 
     function login() {
-        var s = encodeURIComponent("http://cart.gmall.com:8087/cartList");
+        var s = encodeURIComponent("http://cart.gmall.com/cartList");
         window.location.href = "http://auth.gulimall.com/login.html";
     }
 
@@ -789,7 +791,6 @@
     function deleteItem() {
         location.href = "http://cart.gulimall.com/deleteItem?skuId=" + deleteId;
     }
-
 
 
 </script>

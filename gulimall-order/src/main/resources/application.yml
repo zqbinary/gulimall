@@ -13,6 +13,10 @@ spring:
       server-addr: ss:8848
   application:
     name: gulimall-order
+  thymeleaf:
+    cache: false
+  redis:
+    password: root
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
