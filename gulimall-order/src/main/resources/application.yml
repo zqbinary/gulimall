@@ -17,8 +17,16 @@ spring:
     cache: false
   redis:
     password: root
+  session:
+    store-type: redis
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
     db-config:
       id-type: auto
+gulimall:
+  thread:
+    coreSize: 20
+    maxSize: 200
+    keepAliveTime: 10

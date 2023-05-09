@@ -2,6 +2,7 @@ package com.atguigu.gulimall.order.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @createTime: 2020-07-02 18:59
  **/
 
+@ToString
 public class OrderConfirmVo {
 
     @Getter

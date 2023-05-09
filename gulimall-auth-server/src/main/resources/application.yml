@@ -11,5 +11,8 @@ spring:
     password: root
   session:
     store-type: redis
+    #test 1 day
+    timeout: 86400
+
 server:
   port: 20000

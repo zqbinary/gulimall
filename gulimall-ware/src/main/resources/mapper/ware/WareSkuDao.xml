@@ -13,9 +13,9 @@
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
     <select id="getSkuStock" resultType="java.lang.Long">
-        select sum(stock - stock_locked) as count
-        form wms_ware_sku
-        where sku_id = #{skuId}
+        SELECT SUM(stock - stock_locked)
+        FROM wms_ware_sku
+        WHERE sku_id = #{skuId}
     </select>
 
 

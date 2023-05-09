@@ -8,6 +8,8 @@ spring:
       server-addr: ss:8848
   redis:
     password: root
+  session:
+    store-type: redis
 #配置线程池
 gulimall:
   thread:

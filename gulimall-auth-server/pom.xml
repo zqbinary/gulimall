@@ -22,6 +22,10 @@
                     <artifactId>mybatis-plus-boot-starter</artifactId>
                     <groupId>com.baomidou</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
