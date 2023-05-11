@@ -1,30 +1,23 @@
-package com.atguigu.gulimall.product.entity;
+package com.atguigu.gulimall.order.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * spu信息
- *
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2023-03-17 11:20:49
- */
+ * @Description:
+ * @Created: with IntelliJ IDEA.
+ * @author: 夏沫止水
+ * @createTime: 2020-07-05 09:30
+ **/
+
 @Data
-@TableName("pms_spu_info")
-public class SpuInfoEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class SpuInfoVo {
 
     /**
      * 商品id
      */
-    @TableId
     private Long id;
     /**
      * 商品名称
@@ -42,8 +35,12 @@ public class SpuInfoEntity implements Serializable {
      * 品牌id
      */
     private Long brandId;
-    @TableField(exist = false)
+
+    /**
+     * 品牌名
+     */
     private String brandName;
+
     /**
      *
      */

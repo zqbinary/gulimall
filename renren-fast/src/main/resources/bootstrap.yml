@@ -1,0 +1,6 @@
+cloud:
+  nacos:
+    config:
+      server-addr: ss:8848
+    discovery:
+      server-addr: ss:8848

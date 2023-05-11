@@ -16,12 +16,12 @@ spring:
             - Path=/api/product/**,/ping
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
-        - id: renren-fast
-          uri: lb://renren-fast
+        - id: ware_route
+          uri: lb://gulimall-ware
           predicates:
-            - Path=/api/**
+            - Path=/api/ware/**
           filters:
-            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
         - id: gulimall_search
           uri: lb://gulimall-search
           predicates:
@@ -42,3 +42,9 @@ spring:
           uri: lb://gulimall-product
           predicates:
             - Host=gulimall.com,item.gulimall.com
+        - id: renren-fast
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
