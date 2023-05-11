@@ -77,6 +77,7 @@ public class OrderWebController {
                 String message = e.getMessage();
                 attributes.addFlashAttribute("msg", message);
             }
+            log.error("提交订单失败：{}", e.getMessage());
             return "redirect:http://order.gulimall.com/toTrade";
 
         }

@@ -2,6 +2,7 @@ package com.atguigu.gulimall.order.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.TypeReference;
+import com.atguigu.common.exception.NoStockException;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.Query;
 import com.atguigu.common.utils.R;
@@ -16,6 +17,7 @@ import com.atguigu.gulimall.order.feign.ProductFeignService;
 import com.atguigu.gulimall.order.feign.WmsFeignService;
 import com.atguigu.gulimall.order.interceptor.LoginUserInterceptor;
 import com.atguigu.gulimall.order.io.OrderCreateTo;
+import com.atguigu.gulimall.order.service.OrderItemService;
 import com.atguigu.gulimall.order.service.OrderService;
 import com.atguigu.gulimall.order.vo.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -27,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -60,6 +63,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private OrderItemService orderItemService;
 
     static private ThreadLocal<OrderSubmitVo> confirmVoThreadLocal = new ThreadLocal<>();
 
@@ -149,6 +154,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     // @Transactional(isolation = Isolation.READ_COMMITTED) 设置事务的隔离级别
     // @Transactional(propagation = Propagation.REQUIRED)   设置事务的传播级别
     // @GlobalTransactional(rollbackFor = Exception.class)
+    @Transactional
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
         confirmVoThreadLocal.set(vo);
@@ -181,19 +187,37 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 log.info("准备保存订单：{}", order);
                 //金额对比
                 //TODO 3、保存订单
+                saveOrder(order);
                 //4、库存锁定,只要有异常，回滚订单数据
                 //订单号、所有订单项信息(skuId,skuNum,skuName)
+                WareSkuLockVo lockVo = new WareSkuLockVo();
+                lockVo.setOrderSn(order.getOrder().getOrderSn());
                 //获取出要锁定的商品数据信息
-                //TODO 调用远程锁定库存的方法
+                List<OrderItemVo> orderItemVos = order.getOrderItems().stream().map(item -> {
+                    OrderItemVo orderItemVo = new OrderItemVo();
+                    orderItemVo.setSkuId(item.getSkuId());
+                    orderItemVo.setCount(item.getSkuQuantity());
+                    orderItemVo.setTitle(item.getSkuName());
+                    return orderItemVo;
+                }).collect(Collectors.toList());
+                lockVo.setLocks(orderItemVos);
+                // 调用远程锁定库存的方法
                 //出现的问题：扣减库存成功了，但是由于网络原因超时，出现异常，导致订单事务回滚，库存事务不回滚(解决方案：seata)
                 //为了保证高并发，不推荐使用seata，因为是加锁，并行化，提升不了效率,可以发消息给库存服务
-                //锁定成功
+                R r = wmsFeignService.orderLockStock(lockVo);
+                if (r.getCode() == 0) {
+                    //删除购物车里的数据
+                    responseVo.setOrder(order.getOrder());
+                    log.info("tttto delete cart");
+                    //锁定成功
+                    return responseVo;
+                } else {
+                    //锁定失败
+                    throw new NoStockException((String) r.get("msg"));
+                }
                 // int i = 10/0;
                 //TODO 订单创建成功，发送消息给MQ
-                //删除购物车里的数据
-                //锁定失败
                 // responseVo.setCode(3);
-                return responseVo;
             } else {
                 responseVo.setCode(2);
                 return responseVo;
@@ -239,16 +263,22 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private void saveOrder(OrderCreateTo orderCreateTo) {
 
         //获取订单信息
+        OrderEntity order = orderCreateTo.getOrder();
+        order.setModifyTime(new Date());
+        order.setCreateTime(new Date());
         //保存订单
+        baseMapper.insert(order);
         //获取订单项信息
+        List<OrderItemEntity> orderItems = orderCreateTo.getOrderItems();
         //批量保存订单项数据
+        orderItemService.saveBatch(orderItems);
     }
 
     private OrderCreateTo createOrder() {
         OrderCreateTo createTo = new OrderCreateTo();
         //todo 雪花
         //1、生成订单号
-        String orderSn = IdWorker.getTimeId();
+        String orderSn = IdWorker.get32UUID();
         OrderEntity orderEntity = builderOrder(orderSn);
         //2、获取到所有的订单项
         List<OrderItemEntity> orderItemEntities = builderOrderItems(orderSn);
