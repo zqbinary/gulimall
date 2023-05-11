@@ -19,3 +19,10 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+seata:
+  registry:
+    nacos:
+      application: seata-server
+      server-addr: ss:8848
+      username: nacos
+      password: nacos
