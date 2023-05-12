@@ -19,6 +19,9 @@ spring:
     password: root
   session:
     store-type: redis
+  devtools:
+    add-properties: false
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
